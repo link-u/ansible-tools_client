@@ -12,7 +12,13 @@ if [ -d ${VENV_DIR} ]; then
   exit 0
 fi
 
-python3 -m venv ${VENV_DIR}
-source ${VENV_DIR}/bin/activate
+bash -eu <<EOF
+  trap catch ERR
+  function catch() {
+    rm -Rf ${VENV_DIR}
+  }
+  python3 -m venv ${VENV_DIR}
+  source ${VENV_DIR}/bin/activate
 
-pip3 install -r ${SCRIPT_DIR}/req.txt
+  pip3 install -r ${SCRIPT_DIR}/req.txt
+EOF
