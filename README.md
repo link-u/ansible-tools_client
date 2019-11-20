@@ -13,6 +13,8 @@
 ### ラッパーを使う
 
 ```bash
+# MangaHoge_ansibleの直下で
+
 git submodule init
 git submodule add git@github.com:link-u/ansible-tools_client.git client
 
@@ -23,6 +25,8 @@ client/ansible -m ping ....
 ### activateを使う
 
 ```bash
+# MangaHoge_ansibleの直下で
+
 git submodule init
 git submodule add git@github.com:link-u/ansible-tools_client.git client
 
@@ -51,7 +55,7 @@ function use-ansible() {
 }
 ```
 
-これをセットすると、各プロジェクトごとのansibleが有効になります（その旨の表示も出るよ）。
+これをセットすると、各プロジェクトごとのansibleがactivateされます（その旨の表示も出るよ）。
 
 ![use-ansible.png](use-ansible.png)
 
