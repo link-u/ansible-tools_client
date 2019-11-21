@@ -23,7 +23,11 @@ function readlink_f() {
   echo ${PHYS_DIR}/${TARGET_FILE}
 }
 
-SCRIPT_PATH=$(readlink_f $0)
+# zshではsourceすると$0はこのactivateのパスになるが、
+# bashではそれに対応するのは${BASH_SOURCE}なのだ。
+# See: https://stackoverflow.com/questions/35006457/choosing-between-0-and-bash-source
+SCRIPT_PATH=${BASH_SOURCE:-$0}
+SCRIPT_PATH=$(readlink_f ${SCRIPT_PATH})
 SCRIPT_DIR=$(cd $(dirname ${SCRIPT_PATH}); pwd)
 
 REQUIREMENT_HASH=$(cat ${SCRIPT_DIR}/req.txt | openssl dgst -md5 | sed 's/^.* //')
