@@ -1,5 +1,10 @@
 #! /bin/bash
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
+if [ -e "${SCRIPT_DIR}/../../files/ansible_client/req.txt" ]; then
+  REQ_TXT="${SCRIPT_DIR}/../../files/ansible_client/req.txt"
+else
+  REQ_TXT=${SCRIPT_DIR}/req.txt
+fi
 
 if [ -z $1 ]; then
   echo "usage: bash prepare.sh {VENV_DIR}"
@@ -20,5 +25,5 @@ bash -eu <<EOF
   python3 -m venv ${VENV_DIR}
   source ${VENV_DIR}/bin/activate
 
-  pip3 install -r ${SCRIPT_DIR}/req.txt
+  pip3 install -r ${REQ_TXT}
 EOF
