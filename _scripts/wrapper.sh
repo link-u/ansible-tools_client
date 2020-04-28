@@ -23,8 +23,8 @@ function readlink_f() {
 SCRIPT_PATH=$(readlink_f $0)
 SCRIPT_DIR=$(cd $(dirname ${SCRIPT_PATH}); pwd)
 
-if [ -e "${SCRIPT_DIR}/../../files/ansible_client/req.txt" ]; then
-  REQ_TXT="${SCRIPT_DIR}/../../files/ansible_client/req.txt"
+if [ -e "${SCRIPT_DIR}/../../req.txt" ]; then
+  REQ_TXT="${SCRIPT_DIR}/../../req.txt"
 else
   REQ_TXT=${SCRIPT_DIR}/req.txt
 fi

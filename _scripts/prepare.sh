@@ -1,7 +1,7 @@
 #! /bin/bash
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
-if [ -e "${SCRIPT_DIR}/../../files/ansible_client/req.txt" ]; then
-  REQ_TXT="${SCRIPT_DIR}/../../files/ansible_client/req.txt"
+if [ -e "${SCRIPT_DIR}/../../req.txt" ]; then
+  REQ_TXT="${SCRIPT_DIR}/../../req.txt"
 else
   REQ_TXT=${SCRIPT_DIR}/req.txt
 fi
