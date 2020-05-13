@@ -42,6 +42,7 @@ VENV_DIR=$(cd ${SCRIPT_DIR}/../_venvs; pwd)/${REQUIREMENT_HASH}
 bash ${SCRIPT_DIR}/prepare.sh ${VENV_DIR}
 source ${VENV_DIR}/bin/activate
 
+unset REQ_TXT
 unset REQUIREMENT_HASH
 unset SCRIPT_PATH
 unset SCRIPT_DIR
