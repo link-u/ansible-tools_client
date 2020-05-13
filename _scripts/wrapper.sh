@@ -23,7 +23,13 @@ function readlink_f() {
 SCRIPT_PATH=$(readlink_f $0)
 SCRIPT_DIR=$(cd $(dirname ${SCRIPT_PATH}); pwd)
 
-REQUIREMENT_HASH=$(cat ${SCRIPT_DIR}/req.txt | openssl dgst -md5 | sed 's/^.* //')
+if [ -e "${SCRIPT_DIR}/../../req.txt" ]; then
+  REQ_TXT="${SCRIPT_DIR}/../../req.txt"
+else
+  REQ_TXT=${SCRIPT_DIR}/req.txt
+fi
+
+REQUIREMENT_HASH=$(cat ${REQ_TXT} | openssl dgst -md5 | sed 's/^.* //')
 VENV_DIR=$(cd ${SCRIPT_DIR}/../_venvs; pwd)/${REQUIREMENT_HASH}
 
 bash ${SCRIPT_DIR}/prepare.sh ${VENV_DIR}
