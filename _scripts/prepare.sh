@@ -1,5 +1,10 @@
 #! /bin/bash
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+# pre-req.txtはオーバーライドできない
+PRE_REQ_TXT=${SCRIPT_DIR}/pre-req.txt
+
+# req.txtはオーバーライド可能。
 if [ -e "${SCRIPT_DIR}/../../req.txt" ]; then
   REQ_TXT="${SCRIPT_DIR}/../../req.txt"
 else
@@ -25,5 +30,6 @@ bash -eu <<EOF
   python3 -m venv ${VENV_DIR}
   source ${VENV_DIR}/bin/activate
 
+  pip3 install -r ${PRE_REQ_TXT}
   pip3 install -r ${REQ_TXT}
 EOF
