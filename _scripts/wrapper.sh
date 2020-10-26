@@ -64,7 +64,7 @@ export ANSIBLE_COLLECTIONS_PATHS="${VENV_COLLECTIONS_PATH}:${DEFAULT_COLLECTIONS
 WRAPPER_CMD_NAME="$(basename ${0})"
 ARGS=("$@")
 
-## busybox のコマンド名 が install-ansible の時はここで終了.
+## busybox のコマンド名 が wrapper.sh の時はここで終了.
 if [[ "${WRAPPER_CMD_NAME}" == "wrapper.sh" ]]; then
     exit 0;
 fi
