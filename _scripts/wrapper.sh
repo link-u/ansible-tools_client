@@ -20,20 +20,6 @@ function readlink_f() {
     echo ${PHYS_DIR}/${TARGET_FILE}
 }
 
-# from: https://stackoverflow.com/questions/14366390/check-if-an-element-is-present-in-a-bash-array/14367368
-array_contains () {
-    local array="$1[@]"
-    local seeking="$2"
-    local in="no"
-    for element in "${!array}"; do
-        if [[ $element == "$seeking" ]]; then
-            in="yes";
-            break
-        fi
-    done
-    echo "${in}"
-}
-
 SCRIPT_PATH=$(readlink_f $0)
 SCRIPT_DIR=$(cd $(dirname ${SCRIPT_PATH}); pwd)
 
@@ -60,27 +46,14 @@ VENV_COLLECTIONS_PATH="${VENV_DIR}/share/ansible/collections"
 mkdir -p "${VENV_COLLECTIONS_PATH}"
 export ANSIBLE_COLLECTIONS_PATHS="${VENV_COLLECTIONS_PATH}:${DEFAULT_COLLECTIONS_PATHS}"
 
-## busybox のコマンド名とコマンドライン引数を取得
+## スクリプト名とコマンドライン引数を取得
 WRAPPER_CMD_NAME="$(basename ${0})"
 ARGS=("$@")
 
-## busybox のコマンド名 が wrapper.sh の時はここで終了.
+## スクリプト名 が wrapper.sh の時はここで終了.
 if [[ "${WRAPPER_CMD_NAME}" == "wrapper.sh" ]]; then
     exit 0;
 fi
 
-## busybox が特定のコマンド名の時, コマンドライン引数に一部修正を加える
-case "${WRAPPER_CMD_NAME}" in
-    "ansible-galaxy" )
-        ## コマンドライン引数に -p が指定されていない時は VENV_COLLECTIONS_PATH を指定する.
-        #  * 参照: https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#installing-a-collection-from-galaxy
-        if [[ "$(array_contains ARGS '-p')" == "no" ]]; then
-            ARGS+=("-p" "${VENV_COLLECTIONS_PATH}")
-        fi
-        ;;
-
-    * ) ;;
-esac
-
-## シンボリック名に合わせて実行 busybox を実行
+## シンボリック名に合わせて実行このスクリプトを実行
 "${VENV_DIR}/bin/${WRAPPER_CMD_NAME}" "${ARGS[@]}"
