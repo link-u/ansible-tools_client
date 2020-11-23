@@ -1,2 +1,2 @@
-ansible-base>=2.10,<2.11
+ansible>=2.10,<2.11
 Jinja2>=2.11,<2.12
