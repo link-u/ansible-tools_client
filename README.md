@@ -59,6 +59,31 @@ function use-ansible() {
 
 ![use-ansible.png](use-ansible.png)
 
+## パッケージを追加したい
+
+デフォルトだと `_scripts` 以下の `req.txt` にあるライブラリのみインストールするが、プロジェクトによっては他のライブラリもインストールしたいケースがある。  
+その場合、プロジェクトのリポジトリルートに `req.txt` を置いてそれに追記する。
+
+### ディレクトリ構造
+
+```
+ansible-project/
+├── hosts       # インベントリファイル
+├── client/...  # ansible-tools_client
+├── req.txt     # これを作成
+├── roles/
+```
+
+### 追加するreq.txtの中身の例
+
+以下はpasslibを追加している。
+
+```
+ansible>=2.10,<2.11
+Jinja2>=2.11,<2.12
+passlib==1.7.4
+```
+
 ## その他
 
 [_scripts/req.txt](_scripts/req.txt)が更新されるたびに_venvs/が肥大化していくので、たまに消してあげてください。
