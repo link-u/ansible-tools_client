@@ -47,9 +47,9 @@ if __name__ == "__main__":
     ## 存在しない collection がある場合インストール
     for coll_path in collections:
         if not os.path.isdir(coll_path):
-            cmd = ["ansible-galaxy", "collection", "install", "-r", req_file]
-            proc = subprocess.run(cmd, cwd = repo_root_dir)
-            if proc.returncode == 0:
-                break
-            else:
-                sys.exit(proc.returncode)
+            for req_file in req_files_list:
+                cmd = ["ansible-galaxy", "collection", "install", "-r", req_file]
+                proc = subprocess.run(cmd, cwd = repo_root_dir)
+                if proc.returncode != 0:
+                    sys.exit(proc.returncode)
+            break
