@@ -14,25 +14,37 @@ if __name__ == "__main__":
         print("Invalid argument", file=sys.stderr)
         sys.exit(1)
 
+    ## collection がインストールされるディレクトリ
     venv_collections_path = sys.argv[1]
 
-    # req_files_list = [
-    #     os.path.join(repo_root_dir, "_scripts", "req_collections.yml")
-    # ]
+    ## req_collections.yml のファイル一覧
+    _req_files_list = [
+        os.path.join(repo_root_dir, "_scripts", "req_collections.yml"),
+        os.path.join(repo_root_dir, "../", "req_collections.yml")
+    ]
+    req_files_list = [
+        _req_files_list[i] for i in range(len(_req_files_list))
+        if os.path.isfile(_req_files_list[i])
+    ]
 
+    ## インストールする collection 名を抽出
     collections: list = []
-    req_file = os.path.join(repo_root_dir, "_scripts", "req_collections.yml")
-    with open(req_file, "r") as yml:
-        req_yml = yaml.load(yml, Loader=yaml.SafeLoader)
+    for req_file in req_files_list:
+        with open(req_file, "r") as yml:
+            req_yml = yaml.load(yml, Loader=yaml.SafeLoader)
 
-    for coll in req_yml["collections"]:
-        coll_name: str = coll["name"]
-        collections.append(os.path.join(
-            venv_collections_path,
-            "ansible_collections",
-            coll_name.replace(".", "/")
-        ))
+        for coll in req_yml["collections"]:
+            coll_name: str = coll["name"]
+            collections.append(os.path.join(
+                venv_collections_path,
+                "ansible_collections",
+                coll_name.replace(".", "/")
+            ))
 
+    ## 重複要素を削除
+    collections = list(set(collections))
+
+    ## 存在しない collection がある場合インストール
     for coll_path in collections:
         if not os.path.isdir(coll_path):
             cmd = ["ansible-galaxy", "collection", "install", "-r", req_file]
