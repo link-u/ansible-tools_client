@@ -19,6 +19,7 @@
     - [5.3. 追加する req_req_collections.yml の中身の例](#53-追加する-req_req_collectionsyml-の中身の例)
     - [5.4. ansible-collection の探し方](#54-ansible-collection-の探し方)
 - [6. その他](#6-その他)
+- [7. Licence](#7-licence)
 
 <!-- /TOC -->
 
@@ -168,3 +169,6 @@ collections:
 ## 6. その他
 
 [_scripts/req.txt](_scripts/req.txt)が更新されるたびに_venvs/が肥大化していくので、たまに消してあげてください。
+
+## 7. Licence
+MIT
