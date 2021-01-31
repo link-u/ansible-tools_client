@@ -50,6 +50,8 @@ export ANSIBLE_COLLECTIONS_PATHS="${VENV_COLLECTIONS_PATH}:${DEFAULT_COLLECTIONS
 WRAPPER_CMD_NAME="$(basename ${0})"
 ARGS=("$@")
 
+"${VENV_DIR}/bin/python3" "${SCRIPT_DIR}/install_req_collections.py" "${VENV_COLLECTIONS_PATH}"
+
 ## スクリプト名 が wrapper.sh の時はここで終了.
 if [[ "${WRAPPER_CMD_NAME}" == "wrapper.sh" ]]; then
     exit 0;
