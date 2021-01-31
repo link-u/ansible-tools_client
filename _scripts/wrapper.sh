@@ -50,7 +50,19 @@ export ANSIBLE_COLLECTIONS_PATHS="${VENV_COLLECTIONS_PATH}:${DEFAULT_COLLECTIONS
 WRAPPER_CMD_NAME="$(basename ${0})"
 ARGS=("$@")
 
-"${VENV_DIR}/bin/python3" "${SCRIPT_DIR}/install_req_collections.py" "${VENV_COLLECTIONS_PATH}"
+## インストールされている ansible が 2.9 以降かどうかの判定
+IS_ANSIBLE_VER_2_9_OR_LATER=$("${VENV_DIR}/bin/python3" << 'EOS'
+import ansible
+from distutils.version import LooseVersion, StrictVersion
+print(StrictVersion(ansible.__version__) >= StrictVersion('2.9'))
+EOS
+)
+
+## ansible が 2.9 以降の時 collectionansible collections をインストールする.
+#  NOTE: 2.9 以降で collection が実装されているため
+if [[ "${IS_ANSIBLE_VER_2_9_OR_LATER}" == "True" ]]; then
+    "${VENV_DIR}/bin/python3" "${SCRIPT_DIR}/install_req_collections.py" "${VENV_COLLECTIONS_PATH}"
+fi
 
 ## スクリプト名 が wrapper.sh の時はここで終了.
 if [[ "${WRAPPER_CMD_NAME}" == "wrapper.sh" ]]; then
