@@ -4,3 +4,4 @@ collections:
   - name: community.mysql
   - name: community.zabbix
   - name: community.crypto
+  - name: ansible.posix
