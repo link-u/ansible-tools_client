@@ -22,6 +22,7 @@ if [ -d ${VENV_DIR} ]; then
   exit 0
 fi
 
+## NOTE: wheel は何よりも先にインストールしておく
 bash -eu <<EOF
   trap catch ERR
   function catch() {
@@ -30,6 +31,7 @@ bash -eu <<EOF
   python3 -m venv ${VENV_DIR}
   source ${VENV_DIR}/bin/activate
 
+  pip3 install wheel
   pip3 install -r ${PRE_REQ_TXT}
   pip3 install -r ${REQ_TXT}
 EOF
