@@ -23,13 +23,14 @@ function readlink_f() {
 SCRIPT_PATH=$(readlink_f $0)
 SCRIPT_DIR=$(cd $(dirname ${SCRIPT_PATH}); pwd)
 
+PRE_REQ_TXT="${SCRIPT_DIR}/pre-req.txt"
 if [ -e "${SCRIPT_DIR}/../../req.txt" ]; then
     REQ_TXT="${SCRIPT_DIR}/../../req.txt"
 else
     REQ_TXT=${SCRIPT_DIR}/req.txt
 fi
 
-REQUIREMENT_HASH=$(cat ${REQ_TXT} | openssl dgst -md5 | sed 's/^.* //')
+REQUIREMENT_HASH="$(cat "${PRE_REQ_TXT}" "${REQ_TXT}" | openssl dgst -md5 | sed 's/^.* //')"
 VENV_DIR=$(cd ${SCRIPT_DIR}/../_venvs; pwd)/${REQUIREMENT_HASH}
 
 ## python3-venv の作成とアクティベート
