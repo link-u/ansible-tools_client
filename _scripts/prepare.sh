@@ -31,6 +31,7 @@ bash -eu <<EOF
   python3 -m venv ${VENV_DIR}
   source ${VENV_DIR}/bin/activate
 
+  pip3 install --upgrade pip setuptools
   pip3 install wheel
   pip3 install -r ${PRE_REQ_TXT}
   pip3 install -r ${REQ_TXT}
